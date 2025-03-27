@@ -84,7 +84,7 @@ export async function attachPromoCodes(app: Application, route: string = "/promo
 
     const token = crypto.randomUUID();
     req.session.token = token;
-    req.session.user = req.session.user ?? (req.session.user = `${first()}${last()}`.toLowerCase());
+    req.session.user = req.query.user?.toString() ?? req.session.user ?? (req.session.user = `${first()}${last()}`.toLowerCase());
     req.session.uid = req.session.uid ?? crypto.randomUUID();
 
     const promoInfo = await retrievePromoData(spreadsheetId, {
