@@ -2,7 +2,7 @@
   "name": "@dobuki/promo-codes",
   "module": "src/index.ts",
   "description": "Hookup your server to distribute promo codes",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "keywords": [
     "bun",
     "bunjs",
