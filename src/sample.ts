@@ -1,4 +1,3 @@
-import { first, last } from "random-name";
 import { redeemNextPromo } from "./promo/redeemNextPromo";
 import { unredeemPromo } from "./promo/redeemPromo";
 
@@ -8,7 +7,7 @@ const app = "net.dobuki.worldofturtle";
 const promo = await redeemNextPromo(SAMPLE_SHEET_ID, {
   sheetName: app,
   app,
-  User: `${first()}-${last()}`.toLowerCase(),
+  User: `none`,
   Source: "test",
   uid: crypto.randomUUID(),
 });
