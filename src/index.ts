@@ -81,7 +81,7 @@ export async function attachPromoCodes(app: Application, route: string = "/promo
     resave: false,
     saveUninitialized: true,
     cookie: { secure: PROD },
-  }))
+  }));
 
   app.get(`${route}/:app_id`, async (req, res) => {
     const appId = req.params.app_id;
@@ -105,7 +105,7 @@ export async function attachPromoCodes(app: Application, route: string = "/promo
 
   app.get(`${route}/:app_id/redeem`, async (req, res) => {
     const uid = req.query.uid?.toString();
-    const app = req.query.app?.toString() ?? "";
+    const app = req.params.app_id;
     if (uid !== req.session.uid) {
       res.status(403).send("Invalid session");
     }
@@ -147,9 +147,11 @@ export async function attachPromoCodes(app: Application, route: string = "/promo
       uid: req.session.uid,
     });
     if (promoInfo) {
-      res.redirect(`${route}/${appId}/redeem?uid=${req.session.uid}&app=${appId}`);
+      res.redirect(`${route}/${appId}/redeem?uid=${req.session.uid}`);
     } else {
       res.render("nopromo", { appId });
     }
   });
 }
+
+export { retrievePromoData, redeemNextPromo, findPromoForUid }
