@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redeem Promo Code</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        color: #ccc;
+        background-color: #111;
+      }
+      .code {
+        font-size: 24pt;
+        padding: 10pt 20pt;
+        border: 2px solid white;
+        margin: 10px;
+        width: 500px;
+        font-family: "Source Code Pro", monospace;
+      }
+      .google-play {
+        width: 300px;
+        height: 100px;
+        background-color: #111;
+      }
+      .instruct {
+        width: 500px;
+        text-align: center;
+      }
+      .center {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .expiration {
+        font-style: italic;
+      }
+      a:visited {
+        color: pink;
+      }
+    </style>
+  </head>
+  <body>
+    <p></p>
+    <div style="background-color: #333; padding: 20px; margin-bottom: 20px">
+      <img
+        style="max-height: 200px"
+        src="<%= promoInfo.Icon %>"
+        alt="<%= promoInfo.Name %>"
+      />
+      <h1><%= promoInfo.Name %> Promo Code</h1>
+
+      <div class="center">
+        <div class="instruct"><%- instructions %></div>
+      </div>
+    </div>
+    <div class="center">
+      <div class="code"><%= promoInfo.Code %></div>
+    </div>
+    <div class="expiration">Expire: <%= promoInfo.Expiration %></div>
+
+    <br />
+    Click below to apply the promo code and download the game:
+    <br />
+    <br />
+    <a
+      target="_blank"
+      href="https://play.google.com/store/apps/details?id=<%= promoInfo.App %>&code=<%= promoInfo.Code %>"
+    >
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/1280px-Google_Play_Store_badge_EN.svg.png"
+        class="google-play"
+      />
+    </a>
+  </body>
+</html>

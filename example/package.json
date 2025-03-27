@@ -15,7 +15,9 @@
     "serve-static-bun": "^0.5.3"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0",
-    "bun-template": "link:bun-template"
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@dobuki/promo-codes": "link:@dobuki/promo-codes"
   }
 }

@@ -1,21 +1,19 @@
-# bun-template
+# promo-codes
 
-[![npm version](https://badge.fury.io/js/bun-template.svg)](https://www.npmjs.com/package/bun-template)
+[![npm version](https://badge.fury.io/js/@dobuki/promo-codes.svg)](https://www.npmjs.com/package/@dobuki/promo-codes)
 
-Bun template for creating projects using bunjs
+Create a page for distributing your promo codes
 
 ![icon](icon.png)
 
-## Build
+## Setup Google Sheets API
 
-`./build.sh`
+Under the hood, this uses Google sheet API. So you'll need to set it up.
 
-## Run example
+Follow these instructions: [Google Sheet API setup](https://github.com/jacklehamster/google-sheet-db?tab=readme-ov-file#setup)
 
-`./sample.sh`
 
-[example](example)
 
 ## Github Source
 
-<https://github.com/jacklehamster/bun-template/>
+<https://github.com/jacklehamster/@dobuki/promo-codes/>

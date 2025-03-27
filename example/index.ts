@@ -1,11 +1,19 @@
-import { Hello } from "bun-template";
-import Bao from "baojs";
-import serveStatic from "serve-static-bun";
+import express from "express";
+import path from "path";
+import { attachPromoCodes } from "../dist";
 
-const app = new Bao();
-console.log(Hello.hello());
+const app = express();
+const port = 3000;
 
-app.get("/*any", serveStatic("/", { middlewareMode: "bao" }));
+app.use(express.json());
 
-const server = app.listen({ port: 3000 });
-console.log(`Listening on http://localhost:${server.port}`);
+// Serve static files
+app.use(express.static(path.join(__dirname, ".")));
+
+// Attach the promo codes route
+attachPromoCodes(app);
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Listening on http://localhost:${port}`);
+});

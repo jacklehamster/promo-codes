@@ -1,8 +1,8 @@
 {
-  "name": "bun-template",
-  "module": "src/index.tsx",
-  "description": "Bun template for creating projects using bunjs",
-  "version": "1.0.65",
+  "name": "@dobuki/promo-codes",
+  "module": "src/index.ts",
+  "description": "Hookup your server to distribute promo codes",
+  "version": "1.0.0",
   "keywords": [
     "bun",
     "bunjs",
@@ -15,11 +15,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:jacklehamster/bun-template.git"
+    "url": "https://github.com/jacklehamster/promo-codes.git"
   },
-  "homepage": "https://jacklehamster.github.io/bun-template/",
+  "homepage": "<fill in homepage>",
   "author": {
-    "name": "Jack Le Hamster",
+    "name": "Vincent Le Quang",
     "email": "jacklehamster@gmail.com"
   },
   "license": "MIT",
@@ -31,6 +31,7 @@
   },
   "scripts": {
     "test": "bun test",
+    "sample": "bun run src/sample.ts",
     "build": "bun i && rm -rf *.tsbuildinfo && rm -rf dist/*.* && bun run bundler/bundler.ts && bun run test && bun run build:declaration && bun link",
     "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
     "build:example": "cd example && bun i && bun run build && cd ..",
@@ -45,6 +46,22 @@
     "dist"
   ],
   "devDependencies": {
-    "@dobuki/dev-dependencies": "latest"
+    "@dobuki/dev-dependencies": "^1.0.20",
+    "@types/connect-redis": "^0.0.23",
+    "@types/express-session": "^1.18.1",
+    "@types/random-name": "^0.1.2",
+    "@types/redis": "^4.0.11"
+  },
+  "dependencies": {
+    "@dobuki/google-sheet-db": "^1.0.3",
+    "connect-redis": "^8.0.2",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "linkify-html": "^4.2.0",
+    "linkifyjs": "^4.2.0",
+    "random-name": "^0.1.2",
+    "redis": "^4.7.0"
   }
 }
