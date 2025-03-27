@@ -23,7 +23,11 @@ const spreadsheetId = process.env.SPREADSHEET_ID ?? "1VwYU7nTSlwhi2iBSFvYBnuhxPU
 
 const SECRET = process.env.SECRET_WORD ?? "";
 
-export async function attachPromoCodes(app: Application, route: string = "/promo") {
+export interface Options {
+  useRedis?: boolean;
+}
+
+export async function attachPromoCodes(app: Application, route: string = "/promo", options: Options = {}) {
   if (!spreadsheetId?.length) {
     console.log("No spreadsheet available");
     return;
@@ -41,7 +45,7 @@ export async function attachPromoCodes(app: Application, route: string = "/promo
 
   //  Use redis to store session, to persist longer
   let redisClient: RedisClientType | undefined;
-  if (process.env.REDIS_HOST && process.env.REDIS_USER && process.env.REDIS_PASSWORD) {
+  if (options.useRedis && process.env.REDIS_HOST && process.env.REDIS_USER && process.env.REDIS_PASSWORD) {
     const REDIS_URL = `rediss://${process.env.REDIS_HOST ?? "oregon-redis.render.com"}:${process.env.REDIS_PORT ?? 6379}`;
 
     redisClient = createClient({
