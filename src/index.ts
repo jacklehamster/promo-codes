@@ -76,7 +76,7 @@ export async function attachPromoCodes(app: Application, route: string = "/promo
   }
 
   app.use(session({
-    store: new RedisStore({ client: redisClient }),
+    store: redisClient ? new RedisStore({ client: redisClient }) : undefined,
     secret: SECRET,
     resave: false,
     saveUninitialized: true,
