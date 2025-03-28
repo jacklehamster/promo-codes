@@ -24,7 +24,7 @@ export async function findPromoForUid({ sheetId, sheetName, app, uid, credential
   const data = await listSheetsAndFetchData(sheetId, {
     sheet: sheetName,
     condition(row) {
-      return row.sheet === sheetName && row.UID === uid && row.App === app;
+      return row.UID == uid && row.App === app;
     },
     credentials,
   });
