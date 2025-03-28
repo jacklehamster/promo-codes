@@ -1,12 +1,31 @@
-import { Application, urlencoded } from "express";
+import { redeemNextPromo, retrievePromoData } from "./promo/redeemNextPromo";
+import { findPromoForUid } from "./promo/retrievePromo";
+
+let urlencoded: any;
+let session: any;
+let createClient: any;
+let linkifyHtml: any;
+let RedisStore: any;
+
+try {
+  // These will fail in Workers but work in Node.js
+  urlencoded = (await import('express')).urlencoded;
+  session = (await import('express-session')).default;
+  createClient = (await import('redis')).createClient;
+  linkifyHtml = (await import('linkify-html')).default;
+  RedisStore = ((await import('connect-redis')) as any).RedisStore;
+} catch (e: any) {
+  console.log('Node.js-specific imports unavailable:', e.message);
+}
+
+
 import { config } from "dotenv";
 import path from "path";
-import { redeemNextPromo, retrievePromoData } from "./promo/redeemNextPromo";
-import session from "express-session";
-import { findPromoForUid } from "./promo/retrievePromo";
-import { createClient, RedisClientType } from "redis";
-import linkifyHtml from 'linkify-html';
-const { RedisStore } = require("connect-redis")
+// import { Application, urlencoded } from "express";
+// import session from "express-session";
+// import { createClient, RedisClientType } from "redis";
+// import linkifyHtml from 'linkify-html';
+// const { RedisStore } = require("connect-redis")
 
 declare module "express-session" {
   interface SessionData {
@@ -26,7 +45,7 @@ export interface Options {
   useRedis?: boolean;
 }
 
-export async function attachPromoCodes(app: Application, route: string = "/promo", options: Options = {}) {
+export async function attachPromoCodes(app: any, route: string = "/promo", options: Options = {}) {
   if (!spreadsheetId?.length) {
     console.log("No spreadsheet available");
     return;
@@ -43,7 +62,7 @@ export async function attachPromoCodes(app: Application, route: string = "/promo
   app.use(urlencoded({ extended: true }));
 
   //  Use redis to store session, to persist longer
-  let redisClient: RedisClientType | undefined;
+  let redisClient: any;
   if (options.useRedis && process.env.REDIS_HOST && process.env.REDIS_USER && process.env.REDIS_PASSWORD) {
     const REDIS_URL = `rediss://${process.env.REDIS_HOST ?? "oregon-redis.render.com"}:${process.env.REDIS_PORT ?? 6379}`;
 
@@ -52,14 +71,14 @@ export async function attachPromoCodes(app: Application, route: string = "/promo
       username: process.env.REDIS_USER,
       password: process.env.REDIS_PASSWORD,
       socket: {
-        reconnectStrategy: (retries) => {
+        reconnectStrategy: (retries: number) => {
           console.log(`Redis reconnect attempt #${retries}`);
           if (retries > 10) return new Error("Max retries reached"); // Stop after 10 attempts
           return Math.min(retries * 100, 2000); // Exponential backoff, max 2s delay
         },
       },
     });
-    redisClient.on("error", (err) => {
+    redisClient.on("error", (err: any) => {
       console.error("Redis error:", err.message);
     });
 
@@ -82,7 +101,7 @@ export async function attachPromoCodes(app: Application, route: string = "/promo
     cookie: { secure: PROD },
   }));
 
-  app.get(`${route}/:app_id`, async (req, res) => {
+  app.get(`${route}/:app_id`, async (req: any, res: any) => {
     const appId = req.params.app_id;
 
     const token = crypto.randomUUID();
@@ -102,7 +121,7 @@ export async function attachPromoCodes(app: Application, route: string = "/promo
     }
   });
 
-  app.get(`${route}/:app_id/redeem`, async (req, res) => {
+  app.get(`${route}/:app_id/redeem`, async (req: any, res: any) => {
     const uid = req.query.uid?.toString();
     const app = req.params.app_id;
     if (uid !== req.session.uid) {
@@ -125,7 +144,7 @@ export async function attachPromoCodes(app: Application, route: string = "/promo
     }
   });
 
-  app.post(`${route}/:app_id/redeem`, async (req, res) => {
+  app.post(`${route}/:app_id/redeem`, async (req: any, res: any) => {
     const appId = req.params.app_id;
     const token = req.session.token;
     const formToken = req.body.token;
