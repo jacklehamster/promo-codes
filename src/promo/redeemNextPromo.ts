@@ -31,6 +31,7 @@ export async function retrievePromoData(sheetId: string, { sheetName, app, crede
 
 export async function redeemNextPromo(sheetId: string, { sheetName, app, User, Source, uid, credentials }: Props) {
   if (!uid) {
+    console.log("Not uid provided.")
     return;
   }
   {
@@ -59,7 +60,7 @@ export async function redeemNextPromo(sheetId: string, { sheetName, app, User, S
     console.log('No promo code available');
     return undefined;
   } else {
-    const result = await redeemPromo(sheetId, promo, User, uid, Source);
+    const result = await redeemPromo(sheetId, promo, User, uid, Source, credentials);
     if (!result?.[0]?.updatedRows) {
       return undefined;
     }
