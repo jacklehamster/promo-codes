@@ -7,16 +7,19 @@ interface Props {
   User: string;
   Source: string;
   uid?: string;
+  credentials?: string;
 }
 
-export async function retrievePromoData(sheetId: string, { sheetName, app }: {
+export async function retrievePromoData(sheetId: string, { sheetName, app, credentials }: {
   sheetName: string;
   app: string;
+  credentials?: string;
 }) {
   const promo = await retrievePromo({
     sheetId,
     sheetName,
     app,
+    credentials,
   });
   return promo ? {
     ...promo,
@@ -26,7 +29,7 @@ export async function retrievePromoData(sheetId: string, { sheetName, app }: {
   } : null;
 }
 
-export async function redeemNextPromo(sheetId: string, { sheetName, app, User, Source, uid }: Props) {
+export async function redeemNextPromo(sheetId: string, { sheetName, app, User, Source, uid, credentials }: Props) {
   if (!uid) {
     return;
   }
@@ -37,6 +40,7 @@ export async function redeemNextPromo(sheetId: string, { sheetName, app, User, S
       sheetName,
       app,
       uid,
+      credentials,
     });
     if (promo) {
       return promo;
@@ -48,6 +52,7 @@ export async function redeemNextPromo(sheetId: string, { sheetName, app, User, S
     sheetName,
     app,
     uid,
+    credentials,
   });
 
   if (!promo) {

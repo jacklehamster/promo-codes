@@ -1,6 +1,5 @@
 import { Row } from "@dobuki/google-sheet-db";
 
-
 export interface Promo extends Row {
   Code: string;
   Name: string;

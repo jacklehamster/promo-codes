@@ -4,9 +4,9 @@ import path from "path";
 import { redeemNextPromo, retrievePromoData } from "./promo/redeemNextPromo";
 import session from "express-session";
 import { findPromoForUid } from "./promo/retrievePromo";
-import { RedisStore } from "connect-redis";
 import { createClient, RedisClientType } from "redis";
 import linkifyHtml from 'linkify-html';
+const { RedisStore } = require("connect-redis")
 
 declare module "express-session" {
   interface SessionData {
