@@ -17,7 +17,7 @@ export async function retrievePromo({ sheetId, sheetName, app, credentials }: Pr
     },
     credentials,
   });
-  return data?.[sheetName][0] as Promo;
+  return data?.[sheetName]?.[0] as Promo;
 }
 
 export async function findPromoForUid({ sheetId, sheetName, app, uid, credentials }: Prop): Promise<Promo | undefined> {
@@ -28,5 +28,5 @@ export async function findPromoForUid({ sheetId, sheetName, app, uid, credential
     },
     credentials,
   });
-  return data?.[sheetName][0] as Promo;
+  return data?.[sheetName]?.[0] as Promo;
 }
