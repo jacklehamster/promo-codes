@@ -67,7 +67,14 @@
         document.querySelector('#submit').classList.add('hidden');
         document.querySelector('#wait').classList.remove('hidden')"
     >
-      <input type="hidden" name="token" value="<%= token %>" />
+      <script>
+        window.addEventListener("pageshow", (event) => {
+          if (event.persisted) {
+            document.querySelector("#submit").classList.remove("hidden");
+            document.querySelector("#wait").classList.add("hidden");
+          }
+        });
+      </script>
       <input type="hidden" name="src" value="<%= source %>" />
       <button id="submit" type="submit">Get Promo Code</button>
       <div class="center">

@@ -11,4 +11,8 @@ export interface Promo extends Row {
   UID: string;
   Instructions: string;
   Expiration: string;
+  Store: string;
+  ButtonLink: string;
+  ButtonImage: string;
+  storeLink?: string;
 }

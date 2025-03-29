@@ -22,11 +22,25 @@
         margin: 10px;
         width: 500px;
         font-family: "Source Code Pro", monospace;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
       }
-      .google-play {
-        width: 300px;
-        height: 100px;
+      .code:hover {
+        background-color: #333;
+      }
+      .store-button {
+        width: 360px;
         background-color: #111;
+      }
+      .copy-icon {
+        width: 40px;
+        height: 40px;
+      }
+      .copy-indicator {
+        position: absolute;
+        margin-top: -12px;
+        display: none;
       }
       .instruct {
         width: 500px;
@@ -60,7 +74,17 @@
       </div>
     </div>
     <div class="center">
-      <div class="code"><%= promoInfo.Code %></div>
+      <div class="copy-indicator">✔️ Copied to clipboard</div>
+      <div
+        class="code"
+        onClick="navigator.clipboard.writeText(this.textContent).then(() => document.querySelector('.copy-indicator').style.display = 'block')"
+      >
+        <%= promoInfo.Code %>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Bw_copy_icon_320x320.svg"
+          class="copy-icon"
+        />
+      </div>
     </div>
     <div class="expiration">Expire: <%= promoInfo.Expiration %></div>
 
@@ -68,14 +92,8 @@
     Click below to apply the promo code and download the game:
     <br />
     <br />
-    <a
-      target="_blank"
-      href="https://play.google.com/store/apps/details?id=<%= promoInfo.App %>&code=<%= promoInfo.Code %>"
-    >
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/1280px-Google_Play_Store_badge_EN.svg.png"
-        class="google-play"
-      />
+    <a target="_blank" href="<%= promoInfo.storeLink %>">
+      <img src="<%= promoInfo.ButtonImage %>" class="store-button" />
     </a>
   </body>
 </html>

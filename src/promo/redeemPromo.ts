@@ -13,6 +13,7 @@ export async function redeemPromo(sheetId: string, promo: Promo, user: string, u
   });
 }
 
+//  This has no security token or uid, because it's not meant to be called from users
 export async function unredeemPromo(sheetId: string, promoCode: string, sheet: string, credentials?: string) {
   const data = await listSheetsAndFetchData(sheetId, {
     sheet,
