@@ -1,26 +1,27 @@
 import { Promo } from "./Promo";
 import { CookieStore } from "../cookies/CookieStore";
 import format from "string-template";
-import { listPromos } from "./listPromos";
 import { validateUIDFromCookie } from "../cookies/get-uid-from-cookie";
+import { FetchPromo } from "./fetchPromoInterface";
 
 interface Prop {
   sheetId: string;
-  sheetName: string;
   app: string;
-  credentials?: string;
   secret: string;
+  fetchPromo: FetchPromo;
 }
 
-export async function findPromoForUid({ sheetId, sheetName, app, credentials, secret }: Prop, cookies: CookieStore): Promise<Promo | undefined> {
+export async function findPromoForUid({
+  sheetId, app, secret,
+  fetchPromo,
+}: Prop, cookies: CookieStore): Promise<Promo | undefined> {
   const { uid } = await validateUIDFromCookie(cookies, sheetId, app, secret);
   if (!uid) {
     return undefined;
   }
-
-  const promos = await listPromos(sheetId, sheetName, row => {
+  const promos = await fetchPromo(row => {
     return row.UID === uid && row.App === app;
-  }, credentials);
+  });
 
   const promo = promos?.[0];
   return !promo ? undefined : {

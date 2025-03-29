@@ -10,7 +10,7 @@ export default {
     dir: "dist",
     format: "esm",
     chunkFileNames: "[name]-[hash].js",
-    sourcemap: false, // Disable sourcemap generation
+    sourcemap: true,
   },
   cache: true,
   plugins: [

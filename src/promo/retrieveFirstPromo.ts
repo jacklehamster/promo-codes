@@ -1,14 +1,14 @@
 import { Promo } from "./Promo";
-import { listPromos } from "./listPromos";
+import { FetchPromo } from "./fetchPromoInterface";
 
 
-export async function retrieveFirstPromo(sheetId: string, { sheetName, app, credentials }: {
+export async function retrieveFirstPromo({ sheetName, app, fetchPromo }: {
   sheetName: string;
   app: string;
-  credentials?: string;
+  fetchPromo: FetchPromo;
 }): Promise<Promo | undefined> {
-  const promos = await listPromos(sheetId, sheetName, row => {
+  const promos = await fetchPromo(row => {
     return row.sheet === sheetName && !row.Redeemed && row.App === app;
-  }, credentials);
+  });
   return promos?.[0];
 }

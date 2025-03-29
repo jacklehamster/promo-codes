@@ -1,6 +1,6 @@
 import { redeemNextPromo } from "./promo/redeemNextPromo";
 import { retrievePromoData } from "./promo/retrievePromoData";
-import { findPromoForUid } from "./promo/retrievePromo";
+import { findPromoForUid } from "./promo/findPromoForUid";
 
 import promoStache from "../views/promo.mustache";
 import nopromoStache from "../views/nopromo.mustache";
@@ -21,6 +21,7 @@ try {
 
 import { config } from "dotenv";
 import { WorkerHeaders } from "./cookies/WorkerHeaders";
+import { createFetchFromSheet } from "./promo/fetchPromoInterface";
 // import { Application, urlencoded } from "express";
 // import linkifyHtml from 'linkify-html';
 
@@ -84,9 +85,9 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
     const workerHeaders = new WorkerHeaders(req.headers);
     const promoInfo = await findPromoForUid({
       sheetId: spreadsheetId,
-      sheetName: app,
       app,
       secret: SECRET,
+      fetchPromo: createFetchFromSheet(spreadsheetId, app, undefined),
     }, workerHeaders.getCookieStore());
     if (promoInfo) {
       const instructions = linkifyHtml(promoInfo.Instructions, {
@@ -102,4 +103,4 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
   });
 }
 
-export { retrievePromoData, redeemNextPromo, findPromoForUid, WorkerHeaders };
+export { retrievePromoData, redeemNextPromo, findPromoForUid, WorkerHeaders, createFetchFromSheet };

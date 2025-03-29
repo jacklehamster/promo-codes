@@ -1,9 +1,9 @@
-import { verifyToken, verifyUid } from "../security/security";
 import { CookieStore } from "../cookies/CookieStore";
 import { redeemPromo } from "./redeemPromo";
-import { findPromoForUid } from "./retrievePromo";
+import { findPromoForUid } from "./findPromoForUid";
 import { retrieveFirstPromo } from "./retrieveFirstPromo";
 import { validateUIDFromCookie } from "../cookies/get-uid-from-cookie";
+import { createFetchFromSheet, FetchPromo } from "./fetchPromoInterface";
 
 interface Props {
   sheetName: string;
@@ -12,10 +12,11 @@ interface Props {
   credentials?: string;
   secret: string;
   token?: string;
+  fetchPromo?: FetchPromo;
 }
 
 export async function redeemNextPromo(sheetId: string,
-  { sheetName, app, Source, credentials, secret }: Props,
+  { sheetName, app, Source, credentials, secret, fetchPromo }: Props,
   cookies: CookieStore
 ) {
   const { uid, user } = await validateUIDFromCookie(cookies, sheetId, app, secret) ?? {};
@@ -28,10 +29,9 @@ export async function redeemNextPromo(sheetId: string,
     //  check if User already has a promo. (uid gets extracted from cookies)
     const promo = await findPromoForUid({
       sheetId,
-      sheetName,
       app,
-      credentials,
       secret,
+      fetchPromo: fetchPromo ?? createFetchFromSheet(sheetId, sheetName, credentials),
     }, cookies);
     if (promo) {
       return {
@@ -42,10 +42,12 @@ export async function redeemNextPromo(sheetId: string,
     }
   }
 
-  const promo = await retrieveFirstPromo(sheetId, {
+  const fetchPromoCall = fetchPromo ?? createFetchFromSheet(sheetId, sheetName, credentials);
+
+  const promo = await retrieveFirstPromo({
     sheetName,
     app,
-    credentials,
+    fetchPromo: fetchPromoCall,
   });
 
   if (!promo) {
