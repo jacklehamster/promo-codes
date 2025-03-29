@@ -42,7 +42,12 @@ export async function redeemNextPromo(sheetId: string,
       secret,
     }, cookies);
     if (promo) {
-      return promo;
+      return {
+        ...promo,
+        row: undefined,
+        sheet: undefined,
+
+      };
     }
   }
 
