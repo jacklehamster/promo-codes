@@ -1,4 +1,6 @@
 import { CookieStore } from "../cookies/CookieStore";
+import { createNoPromoPage } from "../html/no-promo-page";
+import { createPromoPage } from "../html/promo-page";
 import { generateUid, generateToken } from "../security/security";
 import { createFetchFromSheet, FetchPromo } from "./fetchPromoInterface";
 import { retrieveFirstPromo } from "./retrieveFirstPromo";
@@ -28,5 +30,8 @@ export async function retrievePromoData(sheetId: string, { sheetName, app, crede
     Code: undefined,
     sheet: undefined,
     row: undefined,
-  } : null;
+    createPage(redeemLink: string) {
+      return createPromoPage({ promoInfo: promo, redeemLink });
+    }
+  } : undefined;
 }

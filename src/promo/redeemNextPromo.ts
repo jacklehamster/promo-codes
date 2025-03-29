@@ -21,9 +21,11 @@ export async function redeemNextPromo(sheetId: string,
 ) {
   const { uid, user } = await validateUIDFromCookie(cookies, sheetId, app, secret) ?? {};
   if (!uid?.length) {
-    console.log("Not uid provided.")
+    console.log("No uid provided.")
     return;
   }
+
+  const fetchPromoCall = fetchPromo ?? createFetchFromSheet(sheetId, sheetName, credentials);
 
   {
     //  check if User already has a promo. (uid gets extracted from cookies)
@@ -31,7 +33,7 @@ export async function redeemNextPromo(sheetId: string,
       sheetId,
       app,
       secret,
-      fetchPromo: fetchPromo ?? createFetchFromSheet(sheetId, sheetName, credentials),
+      fetchPromo: fetchPromoCall,
     }, cookies);
     if (promo) {
       return {
@@ -41,8 +43,6 @@ export async function redeemNextPromo(sheetId: string,
       };
     }
   }
-
-  const fetchPromoCall = fetchPromo ?? createFetchFromSheet(sheetId, sheetName, credentials);
 
   const promo = await retrieveFirstPromo({
     sheetName,

@@ -6,12 +6,12 @@ export async function validateUIDFromCookie(cookies: CookieStore, sheetId: strin
   const user = cookies.getCookie("user");
   const token = cookies.getCookie("token");
   const payload = await verifyToken(token, secret ?? "");
+
   if (!payload || payload.app !== app || payload.sheetId !== sheetId || payload.user !== user || payload.signedUID !== signedUID) {
     return {};
   }
   const uid = await verifyUid(signedUID ?? "", secret ?? "") ?? "";
   if (!uid.length) {
-    console.log("Not uid provided.")
     return {};
   }
   return { uid, user };

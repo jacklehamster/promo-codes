@@ -3,6 +3,7 @@ import { CookieStore } from "../cookies/CookieStore";
 import format from "string-template";
 import { validateUIDFromCookie } from "../cookies/get-uid-from-cookie";
 import { FetchPromo } from "./fetchPromoInterface";
+import { createRedeemPage } from "../html/redeem-page";
 
 interface Prop {
   sheetId: string;
@@ -27,5 +28,8 @@ export async function findPromoForUid({
   return !promo ? undefined : {
     ...promo,
     storeLink: promo.ButtonLink ? format(promo.ButtonLink, promo) : undefined,
+    createPage() {
+      return createRedeemPage({ promoInfo: promo });
+    }
   };
 }

@@ -29,7 +29,6 @@ const promo = await redeemNextPromo(SAMPLE_SHEET_ID, {
   }
 });
 
-console.log("Redeemed:", promo);
 
 await new Promise((resolve) => setTimeout(resolve, 3000));
 

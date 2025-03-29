@@ -61,7 +61,7 @@
     <h1>Click the link below to unlock your promo code:</h1>
     <br />
     <form
-      action="{{ route }}/{{ promoInfo.App }}/redeem"
+      action="{{ redeemLink }}"
       method="POST"
       onsubmit="
         document.querySelector('#submit').classList.add('hidden');
@@ -74,8 +74,19 @@
             document.querySelector("#wait").classList.add("hidden");
           }
         });
+        document.addEventListener("visibilitychange", () => {
+          if (document.visibilityState === "visible") {
+            if (performance.now() > 300 * 1000) { // 300 seconds
+              location.reload();
+            }
+          }
+        });
       </script>
-      <input type="hidden" name="src" value="{{ source }}" />
+      <input id="src" type="hidden" name="src" value="" />
+      <script>
+        const params = new URLSearchParams(location.search);
+        document.querySelector("#src").value = params.get("src") || "";
+      </script>
       <button id="submit" type="submit">Get Promo Code</button>
       <div class="center">
         <div id="wait" class="spinner hidden"></div>

@@ -2,18 +2,12 @@ import { redeemNextPromo } from "./promo/redeemNextPromo";
 import { retrievePromoData } from "./promo/retrievePromoData";
 import { findPromoForUid } from "./promo/findPromoForUid";
 
-import promoStache from "../views/promo.mustache";
-import nopromoStache from "../views/nopromo.mustache";
-import redeemStache from "../views/redeem.mustache";
-import Mustache from "mustache";
 
 let urlencoded: any;
-let linkifyHtml: any;
 
 try {
   // These will fail in Workers but work in Node.js
   urlencoded = (await import('express')).urlencoded;
-  linkifyHtml = (await import('linkify-html')).default;
 } catch (e: any) {
   console.log('Node.js-specific imports unavailable:', e.message);
 }
@@ -22,6 +16,7 @@ try {
 import { config } from "dotenv";
 import { WorkerHeaders } from "./cookies/WorkerHeaders";
 import { createFetchFromSheet } from "./promo/fetchPromoInterface";
+import { createNoPromoPage } from "./html/no-promo-page";
 // import { Application, urlencoded } from "express";
 // import linkifyHtml from 'linkify-html';
 
@@ -52,11 +47,9 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
 
     if (promoInfo) {
       res.setHeader('Set-Cookie', workerHeaders.responseCookies);
-      const html = Mustache.render(promoStache, { promoInfo, route, source: req.query.src ?? "none" });
-      res.send(html);
+      res.send(promoInfo.createPage(`${route}/${appId}/redeem`));
     } else {
-      const html = Mustache.render(nopromoStache, { appId });
-      res.send(html);
+      res.send(createNoPromoPage({ appId }));
     }
   });
 
@@ -75,8 +68,7 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
       res.setHeader('Set-Cookie', workerHeaders.responseCookies);
       res.redirect(`${route}/${appId}/redeem`);
     } else {
-      const html = Mustache.render(nopromoStache, { appId });
-      res.send(html);
+      res.send(createNoPromoPage({ appId }));
     }
   });
 
@@ -90,13 +82,8 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
       fetchPromo: createFetchFromSheet(spreadsheetId, app, undefined),
     }, workerHeaders.getCookieStore());
     if (promoInfo) {
-      const instructions = linkifyHtml(promoInfo.Instructions, {
-        target: '_blank',
-        defaultProtocol: 'https',
-      });
       res.setHeader('Set-Cookie', workerHeaders.responseCookies);
-      const html = Mustache.render(redeemStache, { promoInfo, instructions });
-      res.send(html);
+      res.send(promoInfo.createPage());
     } else {
       res.redirect(`${route}/${app}`);
     }
@@ -104,3 +91,4 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
 }
 
 export { retrievePromoData, redeemNextPromo, findPromoForUid, WorkerHeaders, createFetchFromSheet };
+export { createNoPromoPage };
