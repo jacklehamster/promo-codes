@@ -28,7 +28,7 @@
   "scripts": {
     "test": "bun test",
     "sample": "bun run src/sample-sheet.ts",
-    "build": "bun i && rm -rf *.tsbuildinfo && rm -rf dist/*.* && tsc && bun run build:declaration && bun link",
+    "build": "bun i && rm -rf *.tsbuildinfo && rm -rf dist/*.* && tsc && bun run build:declaration && NODE_OPTIONS=--max-old-space-size=4096 rollup -c && bun link",
     "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
     "build:example": "cd example && bun i && bun run build && cd ..",
     "example": "cd example && bun start && cd ..",
@@ -39,13 +39,14 @@
     "access": "public"
   },
   "files": [
-    "dist",
-    "views"
+    "dist"
   ],
   "devDependencies": {
     "@dobuki/dev-dependencies": "^1.0.20",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.2",
     "@types/connect-redis": "^0.0.23",
     "@types/ejs": "^3.1.5",
     "@types/express-session": "^1.18.1",
@@ -59,7 +60,8 @@
     "linkifyjs": "^4.2.0",
     "path": "^0.12.7",
     "redis": "^4.7.0",
-    "rollup": "^4.38.0"
+    "rollup": "^4.38.0",
+    "rollup-plugin-string-import": "^1.2.5"
   },
   "dependencies": {
     "@dobuki/google-sheet-db": "^1.0.15",

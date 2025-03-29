@@ -11,9 +11,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, ".")));
 
 // Attach the promo codes route
-attachPromoCodes(app, "/promo", {
-  useRedis: true,
-});
+attachPromoCodes(app, "/promo");
 
 // Start the server
 app.listen(port, () => {

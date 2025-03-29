@@ -3,9 +3,9 @@ import { retrievePromoData } from "./promo/retrievePromo";
 import { findPromoForUid } from "./promo/retrievePromo";
 import ejs from "ejs";
 
-import promoEJS from "../views/promo.ejs?raw";
-import nopromoEJS from "../views/nopromo.ejs?raw";
-import redeemEJS from "../views/redeem.ejs?raw";
+import promoEJS from "../views/promo.ejs";
+import nopromoEJS from "../views/nopromo.ejs";
+import redeemEJS from "../views/redeem.ejs";
 
 let urlencoded: any;
 let linkifyHtml: any;

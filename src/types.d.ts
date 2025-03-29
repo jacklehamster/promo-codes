@@ -1,5 +1,5 @@
 // Declare raw imports
-declare module "*.ejs?raw" {
+declare module "*.ejs" {
   const content: string;
   export default content;
 }

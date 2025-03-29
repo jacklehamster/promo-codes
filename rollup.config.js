@@ -1,11 +1,25 @@
 import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
+import typescript from "@rollup/plugin-typescript";
+import resolve from "@rollup/plugin-node-resolve";
+import { importAsString } from "rollup-plugin-string-import";
 
 export default {
-  input: "index.js",
+  input: "src/index.ts",
   output: {
-    file: "dist/index.js",
+    dir: "dist",
     format: "esm",
+    chunkFileNames: "[name]-[hash].js",
+    sourcemap: false, // Disable sourcemap generation
   },
-  plugins: [commonjs(), json()],
+  cache: true,
+  plugins: [
+    commonjs(),
+    json(),
+    typescript(),
+    resolve(),
+    importAsString({
+      include: "**/*.ejs",
+    }),
+  ],
 };
