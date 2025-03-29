@@ -15,6 +15,6 @@
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/*.d.ts"],
   "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
 }

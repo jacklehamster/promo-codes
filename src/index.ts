@@ -1,6 +1,11 @@
 import { redeemNextPromo } from "./promo/redeemNextPromo";
 import { retrievePromoData } from "./promo/retrievePromo";
 import { findPromoForUid } from "./promo/retrievePromo";
+import ejs from "ejs";
+
+import promoEJS from "../views/promo.ejs?raw";
+import nopromoEJS from "../views/nopromo.ejs?raw";
+import redeemEJS from "../views/redeem.ejs?raw";
 
 let urlencoded: any;
 let linkifyHtml: any;
@@ -32,14 +37,6 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
     return;
   }
 
-  const PROD = app.get('env') === 'production';
-  app.set("view engine", "ejs");
-  app.set("views", path.join(__dirname, "../views")); // Set the views directory
-
-  if (PROD) {
-    app.set('trust proxy', 1) // trust first proxy
-  }
-
   app.use(urlencoded({ extended: true }));
 
   app.get(`${route}/:app_id`, async (req: any, res: any) => {
@@ -55,9 +52,11 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
 
     if (promoInfo) {
       res.setHeader('Set-Cookie', workerHeaders.responseCookies);
-      res.render("promo", { promoInfo, route, source: req.query.src ?? "none" });
+      const html = ejs.render(promoEJS, { promoInfo, route, source: req.query.src ?? "none" });
+      res.send(html);
     } else {
-      res.render("nopromo", { appId });
+      const html = ejs.render(nopromoEJS, { appId });
+      res.send(html);
     }
   });
 
@@ -76,7 +75,8 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
       res.setHeader('Set-Cookie', workerHeaders.responseCookies);
       res.redirect(`${route}/${appId}/redeem`);
     } else {
-      res.render("nopromo", { appId });
+      const html = ejs.render(nopromoEJS, { appId });
+      res.send(html);
     }
   });
 
@@ -95,7 +95,8 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
         defaultProtocol: 'https',
       });
       res.setHeader('Set-Cookie', workerHeaders.responseCookies);
-      res.render("redeem", { promoInfo, instructions });
+      const html = ejs.render(redeemEJS, { promoInfo, instructions });
+      res.send(html);
     } else {
       res.redirect(`${route}/${app}`);
     }
@@ -103,3 +104,4 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
 }
 
 export { retrievePromoData, redeemNextPromo, findPromoForUid, WorkerHeaders }
+export { nopromoEJS, promoEJS, redeemEJS };

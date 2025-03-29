@@ -39,27 +39,32 @@
     "access": "public"
   },
   "files": [
-    "dist"
+    "dist",
+    "views"
   ],
   "devDependencies": {
     "@dobuki/dev-dependencies": "^1.0.20",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-json": "^6.1.0",
     "@types/connect-redis": "^0.0.23",
+    "@types/ejs": "^3.1.5",
     "@types/express-session": "^1.18.1",
     "@types/redis": "^4.0.11",
     "@types/string-template": "^1.0.6",
     "connect-redis": "^8.0.2",
     "dotenv": "^16.4.7",
-    "ejs": "^3.1.10",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
     "linkify-html": "^4.2.0",
     "linkifyjs": "^4.2.0",
     "path": "^0.12.7",
-    "redis": "^4.7.0"
+    "redis": "^4.7.0",
+    "rollup": "^4.38.0"
   },
   "dependencies": {
     "@dobuki/google-sheet-db": "^1.0.15",
     "jose": "^6.0.10",
-    "string-template": "^1.0.0"
+    "string-template": "^1.0.0",
+    "ejs": "^3.1.10"
   }
 }
