@@ -1,11 +1,11 @@
 import { redeemNextPromo } from "./promo/redeemNextPromo";
-import { retrievePromoData } from "./promo/retrievePromo";
+import { retrievePromoData } from "./promo/retrievePromoData";
 import { findPromoForUid } from "./promo/retrievePromo";
-import ejs from "ejs";
 
-import promoEJS from "../views/promo.ejs";
-import nopromoEJS from "../views/nopromo.ejs";
-import redeemEJS from "../views/redeem.ejs";
+import promoStache from "../views/promo.mustache";
+import nopromoStache from "../views/nopromo.mustache";
+import redeemStache from "../views/redeem.mustache";
+import Mustache from "mustache";
 
 let urlencoded: any;
 let linkifyHtml: any;
@@ -20,7 +20,6 @@ try {
 
 
 import { config } from "dotenv";
-import path from "path";
 import { WorkerHeaders } from "./cookies/WorkerHeaders";
 // import { Application, urlencoded } from "express";
 // import linkifyHtml from 'linkify-html';
@@ -52,10 +51,10 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
 
     if (promoInfo) {
       res.setHeader('Set-Cookie', workerHeaders.responseCookies);
-      const html = ejs.render(promoEJS, { promoInfo, route, source: req.query.src ?? "none" });
+      const html = Mustache.render(promoStache, { promoInfo, route, source: req.query.src ?? "none" });
       res.send(html);
     } else {
-      const html = ejs.render(nopromoEJS, { appId });
+      const html = Mustache.render(nopromoStache, { appId });
       res.send(html);
     }
   });
@@ -75,7 +74,7 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
       res.setHeader('Set-Cookie', workerHeaders.responseCookies);
       res.redirect(`${route}/${appId}/redeem`);
     } else {
-      const html = ejs.render(nopromoEJS, { appId });
+      const html = Mustache.render(nopromoStache, { appId });
       res.send(html);
     }
   });
@@ -95,7 +94,7 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
         defaultProtocol: 'https',
       });
       res.setHeader('Set-Cookie', workerHeaders.responseCookies);
-      const html = ejs.render(redeemEJS, { promoInfo, instructions });
+      const html = Mustache.render(redeemStache, { promoInfo, instructions });
       res.send(html);
     } else {
       res.redirect(`${route}/${app}`);
@@ -103,5 +102,4 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
   });
 }
 
-export { retrievePromoData, redeemNextPromo, findPromoForUid, WorkerHeaders }
-export { nopromoEJS, promoEJS, redeemEJS };
+export { retrievePromoData, redeemNextPromo, findPromoForUid, WorkerHeaders };

@@ -1,5 +1,5 @@
 import { redeemNextPromo } from "./promo/redeemNextPromo";
-import { unredeemPromo } from "./promo/redeemPromo";
+import { unredeemPromo } from "./promo/unredeemPromo";
 
 import { config } from "dotenv";
 import { generateUid } from "./security/security";

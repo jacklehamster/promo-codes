@@ -63,13 +63,13 @@
     <div style="background-color: #333; padding: 20px; margin-bottom: 20px">
       <img
         style="max-height: 200px"
-        src="<%= promoInfo.Icon %>"
-        alt="<%= promoInfo.Name %>"
+        src="{{ promoInfo.Icon }}"
+        alt="{{ promoInfo.Name }}"
       />
-      <h1><%= promoInfo.Name %> Promo Code</h1>
+      <h1>{{ promoInfo.Name }} Promo Code</h1>
 
       <div class="center">
-        <div class="instruct"><%- instructions %></div>
+        <div class="instruct">{{{ instructions }}}</div>
       </div>
     </div>
     <div class="center">
@@ -78,21 +78,21 @@
         class="code"
         onClick="navigator.clipboard.writeText(this.textContent).then(() => document.querySelector('.copy-indicator').style.display = 'block')"
       >
-        <%= promoInfo.Code %>
+        {{ promoInfo.Code }}
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Bw_copy_icon_320x320.svg"
           class="copy-icon"
         />
       </div>
     </div>
-    <div class="expiration">Expire: <%= promoInfo.Expiration %></div>
+    <div class="expiration">Expire: {{ promoInfo.Expiration }}</div>
 
     <br />
     Click below to apply the promo code and download the game:
     <br />
     <br />
-    <a target="_blank" href="<%= promoInfo.storeLink %>">
-      <img src="<%= promoInfo.ButtonImage %>" class="store-button" />
+    <a target="_blank" href="{{ promoInfo.storeLink }}">
+      <img src="{{ promoInfo.ButtonImage }}" class="store-button" />
     </a>
   </body>
 </html>

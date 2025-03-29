@@ -1,7 +1,9 @@
 import { verifyToken, verifyUid } from "../security/security";
 import { CookieStore } from "../cookies/CookieStore";
 import { redeemPromo } from "./redeemPromo";
-import { findPromoForUid, retrievePromo } from "./retrievePromo";
+import { findPromoForUid } from "./retrievePromo";
+import { retrieveFirstPromo } from "./retrieveFirstPromo";
+import { validateUIDFromCookie } from "../cookies/get-uid-from-cookie";
 
 interface Props {
   sheetName: string;
@@ -16,28 +18,18 @@ export async function redeemNextPromo(sheetId: string,
   { sheetName, app, Source, credentials, secret }: Props,
   cookies: CookieStore
 ) {
-  const signedUID = cookies.getCookie("signedUID");
-  const user = cookies.getCookie("user");
-  const token = cookies.getCookie("token");
-  if (token) {
-    const payload = await verifyToken(token, secret ?? "");
-    if (!payload || payload.app !== app || payload.sheetId !== sheetId || payload.user !== user || payload.signedUID !== signedUID) {
-      return;
-    }
-  }
-  const uid = await verifyUid(signedUID ?? "", secret ?? "") ?? "";
-  if (!uid.length) {
+  const { uid, user } = await validateUIDFromCookie(cookies, sheetId, app, secret) ?? {};
+  if (!uid?.length) {
     console.log("Not uid provided.")
     return;
   }
 
   {
-    //  check if User already has a promo.
+    //  check if User already has a promo. (uid gets extracted from cookies)
     const promo = await findPromoForUid({
       sheetId,
       sheetName,
       app,
-      signedUID,
       credentials,
       secret,
     }, cookies);
@@ -46,13 +38,11 @@ export async function redeemNextPromo(sheetId: string,
         ...promo,
         row: undefined,
         sheet: undefined,
-
       };
     }
   }
 
-  const promo = await retrievePromo({
-    sheetId,
+  const promo = await retrieveFirstPromo(sheetId, {
     sheetName,
     app,
     credentials,
@@ -63,7 +53,7 @@ export async function redeemNextPromo(sheetId: string,
     return undefined;
   } else {
     console.log("Redeeming promo");
-    const result = await redeemPromo(sheetId, promo, user, uid, Source, credentials);
+    const result = await redeemPromo(sheetId, promo, { user, uid, src: Source }, credentials);
     if (!result?.[0]?.updatedRows) {
       return undefined;
     }

@@ -19,7 +19,7 @@ export default {
     typescript(),
     resolve(),
     importAsString({
-      include: "**/*.ejs",
+      include: "**/*.mustache",
     }),
   ],
 };

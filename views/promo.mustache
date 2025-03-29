@@ -53,15 +53,15 @@
     <div style="background-color: #333; padding: 20px; margin-bottom: 20px">
       <img
         style="max-height: 200px"
-        src="<%= promoInfo.Icon %>"
-        alt="<%= promoInfo.Name %>"
+        src="{{ promoInfo.Icon }}"
+        alt="{{ promoInfo.Name }}"
       />
-      <h2><%= promoInfo.Name %> Promo Code</h2>
+      <h2>{{ promoInfo.Name }} Promo Code</h2>
     </div>
     <h1>Click the link below to unlock your promo code:</h1>
     <br />
     <form
-      action="<%= route %>/<%= promoInfo.App %>/redeem"
+      action="{{ route }}/{{ promoInfo.App }}/redeem"
       method="POST"
       onsubmit="
         document.querySelector('#submit').classList.add('hidden');
@@ -75,7 +75,7 @@
           }
         });
       </script>
-      <input type="hidden" name="src" value="<%= source %>" />
+      <input type="hidden" name="src" value="{{ source }}" />
       <button id="submit" type="submit">Get Promo Code</button>
       <div class="center">
         <div id="wait" class="spinner hidden"></div>
