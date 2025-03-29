@@ -102,4 +102,4 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
   });
 }
 
-export { retrievePromoData, redeemNextPromo, findPromoForUid }
+export { retrievePromoData, redeemNextPromo, findPromoForUid, WorkerHeaders }
