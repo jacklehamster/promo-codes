@@ -1,5 +1,4 @@
 import { CookieStore } from "../cookies/CookieStore";
-import { createNoPromoPage } from "../html/no-promo-page";
 import { createPromoPage } from "../html/promo-page";
 import { generateUid, generateToken } from "../security/security";
 import { createFetchFromSheet, FetchPromo } from "./fetchPromoInterface";

@@ -17,6 +17,7 @@ import { config } from "dotenv";
 import { WorkerHeaders } from "./cookies/WorkerHeaders";
 import { createFetchFromSheet } from "./promo/fetchPromoInterface";
 import { createNoPromoPage } from "./html/no-promo-page";
+import { createUpdateSheet } from "./promo/updatePromoInterface";
 // import { Application, urlencoded } from "express";
 
 config();
@@ -62,6 +63,8 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
       app: appId,
       Source: src,
       secret: SECRET,
+      fetchPromo: createFetchFromSheet(spreadsheetId, appId, undefined),
+      updatePromo: createUpdateSheet(spreadsheetId, undefined),
     }, workerHeaders.getCookieStore());
     if (promoInfo) {
       res.setHeader('Set-Cookie', workerHeaders.responseCookies);

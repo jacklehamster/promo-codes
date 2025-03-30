@@ -1,27 +1,24 @@
-import { listSheetsAndFetchData, updateSheetRow } from "@dobuki/google-sheet-db";
 import { Promo } from "./Promo";
+import { UpdatePromo } from "./updatePromoInterface";
+import { FetchPromo } from "./fetchPromoInterface";
 
 //  This has no security token or uid, because it's not meant to be called from users
 
-export async function unredeemPromo(sheetId: string, promoCode: string, sheet: string, credentials?: string) {
-  const data = await listSheetsAndFetchData(sheetId, {
-    sheet,
-    condition(row) {
-      return row.sheet === sheet && row.Code === promoCode;
-    },
-    credentials,
+export async function unredeemPromo(promoCode: string, sheet: string, { updatePromo, fetchPromo }: {
+  updatePromo: UpdatePromo,
+  fetchPromo: FetchPromo,
+}) {
+  const data = await fetchPromo((row) => {
+    return row.sheet === sheet && row.Code === promoCode;
   });
-  const promo = data?.[sheet]?.[0] as Promo;
+  const promo = data?.[0] as Promo;
   if (promo) {
     promo.Redeemed = "";
     promo.User = "";
     promo.UID = "";
     promo.Source = "";
-    const result = await updateSheetRow(sheetId, [promo], {
-      sheet,
-      credentials,
-    });
-    if (result?.[0]?.updatedRows) {
+    const result = await updatePromo(promo);
+    if (result) {
       console.log("Promo code unredeemed");
     } else {
       console.log("Error unredeeming promo code");

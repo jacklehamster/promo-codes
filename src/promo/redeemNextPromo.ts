@@ -4,6 +4,7 @@ import { findPromoForUid } from "./findPromoForUid";
 import { retrieveFirstPromo } from "./retrieveFirstPromo";
 import { validateUIDFromCookie } from "../cookies/get-uid-from-cookie";
 import { createFetchFromSheet, FetchPromo } from "./fetchPromoInterface";
+import { createUpdateSheet, UpdatePromo } from "./updatePromoInterface";
 
 interface Props {
   sheetName: string;
@@ -13,10 +14,11 @@ interface Props {
   secret: string;
   token?: string;
   fetchPromo?: FetchPromo;
+  updatePromo?: UpdatePromo;
 }
 
 export async function redeemNextPromo(sheetId: string,
-  { sheetName, app, Source, credentials, secret, fetchPromo }: Props,
+  { sheetName, app, Source, credentials, secret, fetchPromo, updatePromo }: Props,
   cookies: CookieStore
 ) {
   const { uid, user } = await validateUIDFromCookie(cookies, sheetId, app, secret) ?? {};
@@ -55,8 +57,9 @@ export async function redeemNextPromo(sheetId: string,
     return undefined;
   } else {
     console.log("Redeeming promo");
-    const result = await redeemPromo(sheetId, promo, { user, uid, src: Source }, credentials);
-    if (!result?.[0]?.updatedRows) {
+    const updatePromoCall = updatePromo ?? createUpdateSheet(sheetId, credentials);
+    const result = await redeemPromo(promo, { user, uid, src: Source }, updatePromoCall);
+    if (!result) {
       return undefined;
     }
   }
