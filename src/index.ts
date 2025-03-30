@@ -92,5 +92,5 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
   });
 }
 
-export { retrievePromoData, redeemNextPromo, findPromoForUid, WorkerHeaders, createFetchFromSheet };
+export { retrievePromoData, redeemNextPromo, findPromoForUid, WorkerHeaders, createFetchFromSheet, createUpdateSheet };
 export { createNoPromoPage };
