@@ -3,6 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Analytics (conditional on promoInfo.GTAG) -->
+    {{#promoInfo.GTAG}}
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{{ promoInfo.GTAG }}}"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{{ promoInfo.GTAG }}}');
+      </script>
+    {{/promoInfo.GTAG}}    
     <!-- Basic Meta Tags -->
     <meta name="description" content="Unlock an exclusive promo code for {{ promoInfo.Name }} at {{{ url }}}!" />
     <meta name="robots" content="index, follow" />

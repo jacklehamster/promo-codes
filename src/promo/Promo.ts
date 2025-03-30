@@ -14,5 +14,6 @@ export interface Promo extends Row {
   Store: string;
   ButtonLink: string;
   ButtonImage: string;
+  GTAG: string;
   storeLink?: string;
 }
