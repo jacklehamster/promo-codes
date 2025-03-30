@@ -46,8 +46,9 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
     }, workerHeaders.getCookieStore());
 
     if (promoInfo) {
+      const absoluteUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
       res.setHeader('Set-Cookie', workerHeaders.responseCookies);
-      res.send(promoInfo.createPage(`${route}/${appId}/redeem`));
+      res.send(promoInfo.createPage(absoluteUrl, `${route}/${appId}/redeem`));
     } else {
       res.send(createNoPromoPage({ appId }));
     }
@@ -85,7 +86,7 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
     }, workerHeaders.getCookieStore());
     if (promoInfo) {
       res.setHeader('Set-Cookie', workerHeaders.responseCookies);
-      res.send(promoInfo.createPage());
+      res.send(promoInfo.createPage(req.url));
     } else {
       res.redirect(`${route}/${app}`);
     }

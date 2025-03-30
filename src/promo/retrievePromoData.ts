@@ -29,8 +29,8 @@ export async function retrievePromoData(sheetId: string, { sheetName, app, crede
     Code: undefined,
     sheet: undefined,
     row: undefined,
-    createPage(redeemLink: string) {
-      return createPromoPage({ promoInfo: promo, redeemLink });
+    createPage(url: string, redeemLink: string) {
+      return createPromoPage({ promoInfo: promo, redeemLink, url });
     }
   } : undefined;
 }

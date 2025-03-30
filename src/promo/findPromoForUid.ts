@@ -28,8 +28,8 @@ export async function findPromoForUid({
   return !promo ? undefined : {
     ...promo,
     storeLink: promo.ButtonLink ? format(promo.ButtonLink, promo) : undefined,
-    createPage() {
-      return createRedeemPage({ promoInfo: promo });
+    createPage(url: string) {
+      return createRedeemPage({ promoInfo: promo, url });
     }
   };
 }

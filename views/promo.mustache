@@ -3,6 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Basic Meta Tags -->
+    <meta name="description" content="Unlock an exclusive promo code for {{ promoInfo.Name }} at {{{ url }}}!" />
+    <meta name="robots" content="index, follow" />
+    <!-- Social Media Tags -->
+    <meta property="og:title" content="{{ promoInfo.Name }} Promo Code" />
+    <meta property="og:description" content="Unlock an exclusive promo code for {{ promoInfo.Name }}!" />
+    <meta property="og:image" content="{{{ promoInfo.Icon }}}" />
+    <meta property="og:url" content="{{{ url }}}" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ promoInfo.Name }} Promo Code" />
+    <meta name="twitter:description" content="Unlock an exclusive promo code for {{ promoInfo.Name }}!" />
+    <meta name="twitter:image" content="{{{ promoInfo.Icon }}}" />
+    <!-- JSON-LD Structured Data (Coupon Schema) -->
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Offer",
+        "name": "{{ promoInfo.Name }} Promo Code",
+        "description": "Unlock an exclusive promo code for {{ promoInfo.Name }}!",
+        "url": "{{{ url }}}",
+        "image": "{{{ promoInfo.Icon }}}",
+        "availability": "http://schema.org/InStock",
+        "validFrom": "{{ today }}",
+        "priceCurrency": "USD",
+        "price": "0.00"
+      }
+    </script>    
+    <!-- Title -->
     <title>Promo Code</title>
     <style>
       body {
