@@ -18,7 +18,6 @@ import { WorkerHeaders } from "./cookies/WorkerHeaders";
 import { createFetchFromSheet } from "./promo/fetchPromoInterface";
 import { createNoPromoPage } from "./html/no-promo-page";
 // import { Application, urlencoded } from "express";
-// import linkifyHtml from 'linkify-html';
 
 config();
 
