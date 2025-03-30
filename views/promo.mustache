@@ -65,8 +65,7 @@
       method="POST"
       onsubmit="
         document.querySelector('#submit').classList.add('hidden');
-        document.querySelector('#wait').classList.remove('hidden')"
-    >
+        document.querySelector('#wait').classList.remove('hidden')">
       <script>
         window.addEventListener("pageshow", (event) => {
           if (event.persisted) {
@@ -85,7 +84,7 @@
       <input id="src" type="hidden" name="src" value="" />
       <script>
         const params = new URLSearchParams(location.search);
-        document.querySelector("#src").value = params.get("src") || "";
+        document.querySelector("#src").value = params.get("src") || "none";
       </script>
       <button id="submit" type="submit">Get Promo Code</button>
       <div class="center">
