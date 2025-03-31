@@ -2,6 +2,7 @@ import { CookieStore } from "../cookies/CookieStore";
 import { createPromoPage } from "../html/promo-page";
 import { generateUid, generateToken } from "../security/security";
 import { createFetchFromSheet, FetchPromo } from "./fetchPromoInterface";
+import { Promo } from "./Promo";
 import { retrieveFirstPromo } from "./retrieveFirstPromo";
 
 export async function retrievePromoData(sheetId: string, { sheetName, app, credentials, secret, user, fetchPromo }: {
@@ -30,7 +31,7 @@ export async function retrievePromoData(sheetId: string, { sheetName, app, crede
     sheet: undefined,
     row: undefined,
     createPage(url: string, redeemLink: string) {
-      return createPromoPage({ promoInfo: promo, redeemLink, url });
+      return createPromoPage({ promoInfo: this as unknown as Promo, redeemLink, url });
     }
   } : undefined;
 }

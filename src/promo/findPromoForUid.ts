@@ -29,7 +29,7 @@ export async function findPromoForUid({
     ...promo,
     storeLink: promo.ButtonLink ? format(promo.ButtonLink, promo) : undefined,
     createPage(url: string) {
-      return createRedeemPage({ promoInfo: promo, url });
+      return createRedeemPage({ promoInfo: this as Promo, url });
     }
   };
 }
