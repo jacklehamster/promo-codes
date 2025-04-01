@@ -66,7 +66,7 @@
     "rollup-plugin-string-import": "^1.2.5"
   },
   "dependencies": {
-    "@dobuki/google-sheet-db": "^1.0.18",
+    "@dobuki/google-sheet-db": "^1.0.20",
     "jose": "^6.0.10",
     "string-template": "^1.0.0"
   }

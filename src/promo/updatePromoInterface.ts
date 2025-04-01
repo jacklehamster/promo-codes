@@ -11,6 +11,6 @@ export function createUpdateSheet(sheetId: string, credentials: string | undefin
       credentials,
       sheet: promo.sheet,
     });
-    return Boolean(result?.[0]?.updatedRows);
+    return Boolean(result?.totalUpdatedRows);
   };
 }
