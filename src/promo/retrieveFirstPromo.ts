@@ -8,7 +8,7 @@ export async function retrieveFirstPromo({ sheetName, app, fetchPromo }: {
   fetchPromo: FetchPromo;
 }): Promise<Promo | undefined> {
   const promos = await fetchPromo(row => {
-    return row.sheet === sheetName && !row.Redeemed && row.App === app;
+    return row.sheet === sheetName && !row.Redeemed && row.App === app && !row.Hidden;
   });
   return promos?.[0];
 }

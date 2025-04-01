@@ -1,7 +1,7 @@
 import { CookieStore } from "../cookies/CookieStore";
 import { redeemPromo } from "./redeemPromo";
 import { findPromoForUid } from "./findPromoForUid";
-import { retrieveFirstPromo } from "./retrieveFirstPromo";
+import { retrieveFirstPromo as retrieveFirstAvailablePromo } from "./retrieveFirstPromo";
 import { validateUIDFromCookie } from "../cookies/get-uid-from-cookie";
 import { createFetchFromSheet, FetchPromo } from "./fetchPromoInterface";
 import { createUpdateSheet, UpdatePromo } from "./updatePromoInterface";
@@ -46,7 +46,7 @@ export async function redeemNextPromo(sheetId: string,
     }
   }
 
-  const promo = await retrieveFirstPromo({
+  const promo = await retrieveFirstAvailablePromo({
     sheetName,
     app,
     fetchPromo: fetchPromoCall,
