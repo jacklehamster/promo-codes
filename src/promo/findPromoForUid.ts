@@ -16,12 +16,12 @@ export async function findPromoForUid({
   sheetId, app, secret,
   fetchPromo,
 }: Prop, cookies: CookieStore): Promise<Promo | undefined> {
-  const { uid } = await validateUIDFromCookie(cookies, sheetId, app, secret);
+  const { uid, user } = await validateUIDFromCookie(cookies, sheetId, app, secret);
   if (!uid) {
     return undefined;
   }
   const promos = await fetchPromo(row => {
-    return row.UID === uid && row.App === app;
+    return row.App === app && (row.UID === uid || (row.User !== "none" && row.User === user));
   });
 
   const promo = promos?.[0];
