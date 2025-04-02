@@ -1,6 +1,6 @@
 # promo-codes
 
-[![npm version](https://badge.fury.io/js/@dobuki%2promo-codes.svg)](https://www.npmjs.com/package/@dobuki/promo-codes)
+[![npm version](https://badge.fury.io/js/@dobuki%2Fpromo-codes.svg)](https://www.npmjs.com/package/@dobuki/promo-codes)
 
 Create a page for distributing your promo codes
 
