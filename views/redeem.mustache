@@ -89,11 +89,14 @@
     <div class="expiration">Expire: {{ promoInfo.Expiration }}</div>
 
     <br />
-    Click below to apply the promo code and download the game:
+      Scan or click below to apply the promo code and download the game:
     <br />
     <br />
     <a target="_blank" href="{{ promoInfo.storeLink }}">
       <img src="{{ promoInfo.ButtonImage }}" class="store-button" />
+      <p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ promoInfo.storeLink }}" />
+      </p>
     </a>
   </body>
 </html>

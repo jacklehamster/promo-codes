@@ -5,6 +5,9 @@ import resolve from "@rollup/plugin-node-resolve";
 import { importAsString } from "rollup-plugin-string-import";
 import terser from "@rollup/plugin-terser";
 
+const isDev = process.env.NODE_ENV === "dev";
+console.log(isDev ? "DEV mode" : "PROD mode");
+
 export default {
   input: "src/index.ts",
   output: {
@@ -22,6 +25,15 @@ export default {
     importAsString({
       include: "**/*.mustache",
     }),
-    terser(),
+    ...(isDev
+      ? []
+      : [
+          terser({
+            mangle: true, // Shorten variable names
+            output: {
+              comments: false, // Remove comments
+            },
+          }),
+        ]),
   ],
 };
