@@ -20,10 +20,7 @@ export default {
   plugins: [
     commonjs(),
     json(),
-    typescript({
-      tsconfig: "./tsconfig.json",
-      outputToFilesystem: false, // Avoid writing .d.ts files in dev
-    }),
+    typescript(),
     resolve(),
     importAsString({
       include: "**/*.mustache",
