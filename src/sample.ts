@@ -22,7 +22,7 @@ const updatePromo = createUpdateSheet(SAMPLE_SHEET_ID, undefined);
 const promo = await redeemNextPromo(SAMPLE_SHEET_ID, {
   sheetName: app,
   app,
-  Source: "test",
+  src: "test",
   secret: SECRET,
   fetchPromo,
   updatePromo,

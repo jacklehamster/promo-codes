@@ -17,4 +17,5 @@ export interface Promo extends Row {
   GTAG: string;
   storeLink?: string;
   Hidden: boolean | string;
+  RequestEmails: boolean | string;
 }

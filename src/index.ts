@@ -57,13 +57,15 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
   app.post(`${route}/:app_id/redeem`, async (req: any, res: any) => {
     const appId = req.params.app_id;
     const src = req.body.src;
+    const email = req.body.email;
 
     const workerHeaders = new WorkerHeaders(req.headers);
     const promoInfo = await redeemNextPromo(spreadsheetId, {
       sheetName: appId,
       app: appId,
-      Source: src,
+      src,
       secret: SECRET,
+      email,
       fetchPromo: createFetchFromSheet(spreadsheetId, appId, undefined),
       updatePromo: createUpdateSheet(spreadsheetId, undefined),
     }, workerHeaders.getCookieStore());

@@ -3,7 +3,6 @@ import { JWTPayload, SignJWT, jwtVerify } from 'jose';
 export interface Payload extends JWTPayload {
   app: string;
   sheetId: string;
-  user: string;
   signedUID: string;
 }
 

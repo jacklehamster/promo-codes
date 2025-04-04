@@ -85,6 +85,11 @@
       .hidden {
         display: none;
       }
+      input {
+        font-size: 20pt;
+        max-width: 100%;
+        width: 400px;
+      }
     </style>
   </head>
   <body>
@@ -97,7 +102,15 @@
       />
       <h2>{{ promoInfo.Name }} Promo Code</h2>
     </div>
-    <h1>Click the link below to unlock your promo code:</h1>
+
+    <h2>
+      {{#promoInfo.RequestEmails}}
+        <label for="email">To unlock your promo code, please enter your email.</label>
+      {{/promoInfo.RequestEmails}}
+      {{^promoInfo.RequestEmails}}
+        Click the link below to unlock your promo code:
+      {{/promoInfo.RequestEmails}}
+    </h2>
     <br />
     <form
       action="{{ redeemLink }}"
@@ -125,10 +138,22 @@
         const params = new URLSearchParams(location.search);
         document.querySelector("#src").value = params.get("src") || "none";
       </script>
+
+      {{#promoInfo.RequestEmails}}
+      <!-- EMAIL -->
+      <div>
+        <input placeholder="email@example.com" type="email" name="email" id="email" value="" required aria-required="true">
+      </div>
+      {{/promoInfo.RequestEmails}}
+      <br />
+
       <button id="submit" type="submit">Get Promo Code</button>
       <div class="center">
         <div id="wait" class="spinner hidden"></div>
       </div>
+      {{#promoInfo.RequestEmails}}
+      <p>By submitting your email, you’re opting in to receive updates about our upcoming games. Unsubscribe anytime.</p>
+      {{/promoInfo.RequestEmails}}
     </form>
   </body>
 </html>

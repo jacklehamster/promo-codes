@@ -9,7 +9,8 @@ import { createUpdateSheet, UpdatePromo } from "./updatePromoInterface";
 interface Props {
   sheetName: string;
   app: string;
-  Source: string;
+  src: string;
+  email?: string;
   credentials?: string;
   secret: string;
   token?: string;
@@ -18,10 +19,10 @@ interface Props {
 }
 
 export async function redeemNextPromo(sheetId: string,
-  { sheetName, app, Source, credentials, secret, fetchPromo, updatePromo }: Props,
+  { sheetName, app, src, credentials, secret, fetchPromo, updatePromo, email }: Props,
   cookies: CookieStore
 ) {
-  const { uid, user } = await validateUIDFromCookie(cookies, sheetId, app, secret) ?? {};
+  const { uid } = await validateUIDFromCookie(cookies, sheetId, app, secret) ?? {};
   if (!uid?.length) {
     console.log("No uid provided.")
     return;
@@ -58,7 +59,12 @@ export async function redeemNextPromo(sheetId: string,
   } else {
     console.log("Redeeming promo");
     const updatePromoCall = updatePromo ?? createUpdateSheet(sheetId, credentials);
-    const result = await redeemPromo(promo, { user, uid, src: Source }, updatePromoCall);
+    if (email) {
+      cookies.setCookie(`${app}-user`, email);
+    }
+
+    const user = email ?? cookies.getCookie(`${app}-user`);
+    const result = await redeemPromo(promo, { user, uid, src }, updatePromoCall);
     if (!result) {
       return undefined;
     }

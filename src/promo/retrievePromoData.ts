@@ -18,12 +18,11 @@ export async function retrievePromoData(sheetId: string, { sheetName, app, crede
     app,
     fetchPromo: fetchPromo ?? createFetchFromSheet(sheetId, sheetName, credentials),
   });
-  const signedUID = cookies.getCookie("signedUID") ?? await generateUid(secret ?? "");
-  const token = await generateToken({ app, sheetId, user, signedUID }, '5m', secret ?? "");
+  const signedUID = cookies.getCookie(`${app}-signedUID`) ?? await generateUid(secret ?? "");
+  const token = await generateToken({ app, sheetId, signedUID }, '5m', secret ?? "");
 
-  cookies.setCookie('user', user);
-  cookies.setCookie('token', token);
-  cookies.setCookie('signedUID', signedUID, 60 * 60 * 24 * 365);
+  cookies.setCookie(`${app}-token`, token);
+  cookies.setCookie(`${app}-signedUID`, signedUID, 60 * 60 * 24 * 365);
 
   return promo ? {
     ...promo,

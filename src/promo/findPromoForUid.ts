@@ -16,12 +16,13 @@ export async function findPromoForUid({
   sheetId, app, secret,
   fetchPromo,
 }: Prop, cookies: CookieStore): Promise<Promo | undefined> {
-  const { uid, user } = await validateUIDFromCookie(cookies, sheetId, app, secret);
+  const user = cookies.getCookie(`${app}-user`);
+  const { uid } = await validateUIDFromCookie(cookies, sheetId, app, secret);
   if (!uid) {
     return undefined;
   }
   const promos = await fetchPromo(row => {
-    return row.App === app && (row.UID === uid || (row.User !== "none" && row.User === user));
+    return row.App === app && (row.UID === uid || (!!row.User && row.User !== "none" && row.User === user));
   });
 
   const promo = promos?.[0];
