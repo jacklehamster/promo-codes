@@ -42,7 +42,6 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
       sheetName: appId,
       app: appId,
       secret: SECRET,
-      user: req.query.user?.toString() ?? "none",
     }, workerHeaders.getCookieStore());
 
     if (promoInfo) {
@@ -95,5 +94,6 @@ export async function attachPromoCodes(app: any, route: string = "/promo") {
   });
 }
 
+export { initCookies } from "./promo/initCookies";
 export { retrievePromoData, redeemNextPromo, findPromoForUid, WorkerHeaders, createFetchFromSheet, createUpdateSheet };
 export { createNoPromoPage };
