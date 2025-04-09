@@ -59,11 +59,7 @@ export async function redeemNextPromo(sheetId: string,
   } else {
     console.log("Redeeming promo");
     const updatePromoCall = updatePromo ?? createUpdateSheet(sheetId, credentials);
-    if (email) {
-      cookies.setCookie(`${app}-user`, email);
-    }
-
-    const user = email ?? cookies.getCookie(`${app}-user`);
+    const user = email ?? "N/A";
     const result = await redeemPromo(promo, { user, uid, src }, updatePromoCall);
     if (!result) {
       return undefined;

@@ -136,7 +136,7 @@
       <input id="src" type="hidden" name="src" value="" />
       <script>
         const params = new URLSearchParams(location.search);
-        document.querySelector("#src").value = params.get("src") || "none";
+        document.querySelector("#src").value = params.get("src") || "N/A";
       </script>
 
       {{#promoInfo.RequestEmails}}

@@ -64,7 +64,7 @@
     "mustache": "^4.2.0",
     "path": "^0.12.7",
     "redis": "^4.7.0",
-    "rollup": "^4.38.0",
+    "rollup": "^4.39.0",
     "rollup-plugin-string-import": "^1.2.5"
   },
   "dependencies": {
