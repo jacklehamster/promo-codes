@@ -1,4 +1,4 @@
-import { listSheetsAndFetchData, Row } from "@dobuki/google-sheet-db";
+import { listSheetsAndFetchData } from "@dobuki/google-sheet-db";
 import { Promo } from "./Promo";
 
 export type FetchPromo = (condition: (row: Promo) => boolean) => Promise<Promo[]>;
