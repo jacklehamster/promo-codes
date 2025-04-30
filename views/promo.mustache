@@ -57,9 +57,12 @@
         cursor: pointer;
         border-radius: 5px;
         background-color: beige;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
       }
-      h2 {
-        color: #fff;
+      button:hover {
+        background-color: #FFE066;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transform: scale(1.05);
       }
       .spinner {
         width: 24px;
@@ -90,17 +93,45 @@
         max-width: 100%;
         width: 400px;
       }
+      .small-icon {
+        width: 20px;
+        height: 20px;
+      }
+      .link {
+        color: #ccc;
+        text-decoration: none;
+      }
+      .link:hover {
+        color: #3065C8;
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
     <p></p>
     <div style="background-color: #333; padding: 20px; margin-bottom: 20px">
-      <img
-        style="max-height: 200px"
-        src="{{ promoInfo.Icon }}"
-        alt="{{ promoInfo.Name }}"
-      />
-      <h2>{{ promoInfo.Name }} Promo Code</h2>
+      {{#promoInfo.StoreLink}}
+        <a target="_blank" rel="noopener" class="link" href="{{ promoInfo.StoreLink }}">
+          <img
+            style="max-height: 200px"
+            src="{{ promoInfo.Icon }}"
+            alt="{{ promoInfo.Name }}"
+          />
+          <h2>{{ promoInfo.Name }} on {{ promoInfo.Store }}
+            <img class="small-icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Link-external-small-ltr-progressive.svg/240px-Link-external-small-ltr-progressive.svg.png">
+          </h2>
+        </a>
+      {{/promoInfo.StoreLink}}
+      {{^promoInfo.StoreLink}}
+        <div>
+          <img
+            style="max-height: 200px"
+            src="{{ promoInfo.Icon }}"
+            alt="{{ promoInfo.Name }}"
+          />
+          <h2>{{ promoInfo.Name }} on {{ promoInfo.Store }}</h2>
+        </div>
+      {{/promoInfo.StoreLink}}
     </div>
 
     <h2>

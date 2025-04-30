@@ -32,8 +32,12 @@
       .store-button {
         width: 360px;
         background-color: #111;
+        transition: transform 0.2s ease;
       }
-      .copy-icon {
+      .store-button:hover {
+        transform: scale(1.05);
+      }
+      .small-icon {
         width: 30px;
         height: 30px;
       }
@@ -62,11 +66,24 @@
   <body>
     <p></p>
     <div style="background-color: #333; padding: 20px; margin-bottom: 20px">
-      <img
-        style="max-height: 200px"
-        src="{{ promoInfo.Icon }}"
-        alt="{{ promoInfo.Name }}"
-      />
+      {{#promoInfo.StoreLink}}
+        <a target="_blank" rel="noopener" class="link" href="{{ promoInfo.StoreLink }}">
+          <img
+            style="max-height: 200px"
+            src="{{ promoInfo.Icon }}"
+            alt="{{ promoInfo.Name }}"
+          />
+        </a>
+      {{/promoInfo.StoreLink}}
+      {{^promoInfo.StoreLink}}
+        <div>
+          <img
+            style="max-height: 200px"
+            src="{{ promoInfo.Icon }}"
+            alt="{{ promoInfo.Name }}"
+          />
+        </div>
+      {{/promoInfo.StoreLink}}
       <h1>{{ promoInfo.Name }} Promo Code</h1>
 
       <div class="center">
@@ -82,7 +99,7 @@
         {{ promoInfo.Code }}
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Bw_copy_icon_320x320.svg"
-          class="copy-icon"
+          class="small-icon"
         />
       </div>
     </div>
